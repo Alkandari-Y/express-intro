@@ -31,7 +31,6 @@ app.delete("/api/products/:productId", (req, res) => {
     }
 })
 
-console.log('outside the function',data)
 const PORT = 8000;
 
 app.listen(PORT, () => {
