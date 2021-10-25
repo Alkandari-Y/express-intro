@@ -4,5 +4,8 @@ function convertToSlug(Text) {
                .replace(/[^\w ]+/g, '')
                .replace(/ +/g, '-');
 }
-  
-console.log(convertToSlug("hello world! It's a slug"))
+
+
+const textToSlug = "hello world! It's a slug number- ---123123123"
+console.log(textToSlug)
+console.log(convertToSlug(textToSlug))
