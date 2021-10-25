@@ -1,5 +1,6 @@
 const express = require("express");
 const productRoutes = require("./apis/products/routes");
+const connectDb = require("./database");
 
 const app = express();
 
@@ -9,7 +10,10 @@ app.get("/", (req, res) => {
 
 
 app.use(express.json())
-app.use("/api/products",productRoutes)
+app.use("/api/products", productRoutes)
+
+
+connectDb();
 
 const PORT = 8000;
 
