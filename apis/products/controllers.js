@@ -37,7 +37,7 @@ const updateProductItem = async (req, res) => {
         const foundProduct = await Product.findById(reqId)
         if (foundProduct) {
             await foundProduct.updateOne(req.body, {new: true})
-            return res.status(204).json(foundProduct)
+            return res.status(200).json(foundProduct)
         } else {
             return res.status(404).json({message: "Not Found"})
         }
@@ -46,6 +46,30 @@ const updateProductItem = async (req, res) => {
         return res.status(500).json({message: `${err}`})
     }
 }
+
+//or
+
+// const updateProductItem = async (req, res) => {
+//     try {
+//       const id = req.params.productId;
+//       const product = Product.findById(id);
+//       if (product) {
+//         const updatedRecord = await Product.findOneAndUpdate(
+//           { id: id },
+//           req.body,
+//           {
+//             new: true,
+//           }
+//         );
+//         res.statusCode = 200;
+//         return res.json(updatedRecord);
+//       }
+//     } catch (error) {
+//       console.log(error);
+//       res.statusCode = 500;
+//       return res.json().end();
+//     }
+//   };
 
 
 module.exports = {getProductList, addProductItem, deleteProductItem, updateProductItem}
