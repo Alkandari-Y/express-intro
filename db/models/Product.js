@@ -1,15 +1,11 @@
 const mongoose = require("mongoose")
+const mongooseSlugPlugin = require('mongoose-slug-plugin');
 
 const ProductSchema = mongoose.Schema({
     name: {
         type: String,
         required: true
     },
-    slug: {
-        type: String,
-        required: true
-    },
-    
     image: {
         type: String,
         required: true
@@ -27,12 +23,17 @@ const ProductSchema = mongoose.Schema({
     
     quantity: {
         type: Number,
-        required: true
+        default: 0
     },
     price: {
         type: Number,
-        required: true
+        default: 5,
     }
-})
+},
+{
+    timestamps: true,
+}
+)
 
+ProductSchema.plugin(mongooseSlugPlugin, { tmpl: '<%=name%>' });
 module.exports = mongoose.model("Product", ProductSchema)
