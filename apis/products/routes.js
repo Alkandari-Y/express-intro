@@ -7,10 +7,6 @@ const {
     updateProductItem
 } = require("./controllers")
 
-
-
-let products = require("../../products")
-
 router.get("/", getProductList)
 
 router.post("/", addProductItem)
