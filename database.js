@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
-const {userName, passWord} = require('./dbA')
+const {userName, passWord, dbName} = require('./dbA')
 
+//  
 
-const mgn = `mongodb+srv://${userName}:${passWord}@cluster0.wuuqd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+const mgn = `mongodb+srv://${userName}:${passWord}@${dbName}.wuuqd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 
 const connectDB = async () => {
     try {

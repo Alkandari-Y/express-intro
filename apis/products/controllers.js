@@ -1,5 +1,5 @@
 const Product = require("../../db/models/Product")
-let products = require("../../products")
+// let products = require("../../products")
 
 const getProductList = async (req, res) => {
     const allProducts = await Product.find()
