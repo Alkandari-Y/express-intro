@@ -5,7 +5,6 @@ const getProductList = async (req, res) => {
     return res.json(allProducts)
 }
 
-
 const addProductItem =  async (req, res) => {
     try {
         const newProduct = await Product.create(req.body)
@@ -34,7 +33,7 @@ const updateProductItem = async (req, res) => {
 const deleteProductItem = async(req, res) => {
     const { productId } = req.params
     try {
-        const deletedProduct = await Product.findByUdAndDelete({_id: productId})
+        const deletedProduct = await Product.findByIdAndDelete({_id: productId})
         if (deletedProduct) {
             return res.status(204).end()
         } else {
