@@ -32,13 +32,21 @@ app.use("/api/products", productRoutes)
 
 app.use((req, res) => {
     const err = new Error("Not Found");
-    res.status(404);
     console.log(`Path Not Found ${logger(req)}`)
-    res.json({
+    res.status(404).json({
       error: 
     `Path ${err.message}`
     });
-  });
+});
+
+app.use((err, req, res, next) => {
+    res.status(
+        err.status || 500
+    ).json(
+        err.message || {
+        message: "Something Broke! Internal Server Error!"
+    })
+})
 
 connectDb();
 

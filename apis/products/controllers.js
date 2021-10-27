@@ -1,46 +1,60 @@
 const Product = require("../../db/models/Product")
 
-const getProductList = async (req, res) => {
-    const allProducts = await Product.find()
-    return res.json(allProducts)
+const getProductList = async (req, res, next) => {
+    try {
+        const allProducts = await Product.find()
+        return res.json(allProducts)
+    } catch (err) {
+        next(err)
+    }
 }
 
-const addProductItem =  async (req, res) => {
+const addProductItem =  async (req, res, next) => {
     try {
         const newProduct = await Product.create(req.body)
         return res.status(201).json(newProduct)
     } catch (err) {
-        console.log(err)
-        return res.status(500).json({message: "Theres an error in the post, review the post!"})
+        next(err)
+        // console.log(err)
+        // return res.status(500).json({message: "Theres an error in the post, review the post!"})
     }
 }
 
-const updateProductItem = async (req, res) => {
+const updateProductItem = async (req, res, next) => {
     const { productId } = req.params
     try {
         const updatedProduct = await Product.findByIdAndUpdate({ _id: productId }, req.body, { new: true, runValidators: true })
         if (updatedProduct) {
             return res.json(updatedProduct)
         } else {
-            return res.status(404).json({ message: "Not Found" })
+            // return res.status(404).json({ message: "Product Not Found" })
+            next({
+                status: 404,
+                message: "Product Not Found!"
+            })
         }
-    } catch(err) {
-        console.log(err)
-        return res.status(500).json({message: `${err}`})
+    } catch (err) {
+        next(err)
+        // console.log(err)
+        // return res.status(500).json({message: `${err}`})
     }
 }
 
-const deleteProductItem = async(req, res) => {
+const deleteProductItem = async(req, res, next) => {
     const { productId } = req.params
     try {
         const deletedProduct = await Product.findByIdAndDelete({_id: productId})
         if (deletedProduct) {
             return res.status(204).end()
         } else {
-            return res.status(404).json('There nothing to delete')
+            // return res.status(404).json('Product Not Found')
+            next({
+                status: 404,
+                message: "Product Not Found!"
+            })
         }
     } catch(err) {
-        console.log(err)
+        next(err)
     }
 }
 
