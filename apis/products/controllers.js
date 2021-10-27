@@ -16,12 +16,26 @@ const addProductItem =  async (req, res) => {
     }
 }
 
-const deleteProductItem = async(req, res) => {
-    const reqId = req.params.productId
+const updateProductItem = async (req, res) => {
+    const { productId } = req.params
     try {
-        const foundProduct = await Product.findById(reqId)
-        if (foundProduct) {
-            foundProduct.remove()
+        const updatedProduct = await Product.findByIdAndUpdate({ _id: productId }, req.body, { new: true, runValidators: true })
+        if (updatedProduct) {
+            return res.json(updatedProduct)
+        } else {
+            return res.status(404).json({ message: "Not Found" })
+        }
+    } catch(err) {
+        console.log(err)
+        return res.status(500).json({message: `${err}`})
+    }
+}
+
+const deleteProductItem = async(req, res) => {
+    const { productId } = req.params
+    try {
+        const deletedProduct = await Product.findByUdAndDelete({_id: productId})
+        if (deletedProduct) {
             return res.status(204).end()
         } else {
             return res.status(404).json('There nothing to delete')
@@ -31,21 +45,36 @@ const deleteProductItem = async(req, res) => {
     }
 }
 
-const updateProductItem = async (req, res) => {
-    const reqId = req.params.productId
-    try {
-        const foundProduct = await Product.findById(reqId)
-        if (foundProduct) {
-            await foundProduct.updateOne(req.body, {new: true})
-            return res.status(200).json(foundProduct)
-        } else {
-            return res.status(404).json({message: "Not Found"})
-        }
-    } catch(err) {
-        console.log(err)
-        return res.status(500).json({message: `${err}`})
-    }
-}
+// const deleteProductItem = async(req, res) => {
+//     const reqId = req.params.productId
+//     try {
+//         const foundProduct = await Product.findById(reqId)
+//         if (foundProduct) {
+//             foundProduct.remove()
+//             return res.status(204).end()
+//         } else {
+//             return res.status(404).json('There nothing to delete')
+//         }
+//     } catch(err) {
+//         console.log(err)
+//     }
+// }
+
+// const updateProductItem = async (req, res) => {
+//     const reqId = req.params.productId
+//     try {
+//         const foundProduct = await Product.findById(reqId)
+//         if (foundProduct) {
+//             await foundProduct.updateOne(req.body, {new: true})
+//             return res.status(200).json(foundProduct)
+//         } else {
+//             return res.status(404).json({message: "Not Found"})
+//         }
+//     } catch(err) {
+//         console.log(err)
+//         return res.status(500).json({message: `${err}`})
+//     }
+// }
 
 //or
 
@@ -70,6 +99,5 @@ const updateProductItem = async (req, res) => {
 //       return res.json().end();
 //     }
 //   };
-
 
 module.exports = {getProductList, addProductItem, deleteProductItem, updateProductItem}
