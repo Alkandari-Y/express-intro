@@ -1,38 +1,36 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const Product = require("../../db/models/Product");
 const {
-    fetchProduct,
-    getProductList,
-    addProductItem,
-    deleteProductItem,
-    updateProductItem,
-    getProductDetails
-} = require("./controllers")
+  productListFetch,
+  productCreate,
+  productDelete,
+  productUpdate,
+  productDetailFetch,
+  fetchProduct,
+} = require("./controllers");
+const upload = require('../../middleware/multer')
+// Create a mini express application
+const router = express.Router();
 
+// Param Middleware
 router.param("productId", async (req, res, next, productId) => {
-    const product = await fetchProduct(productId, next)
-    if (product){
-        req.product = product
-        next()
-    } else {
-        next({
-            status: 404,
-            message: "product not found"
-        })
-    }
-    next()
-})
+  const product = await fetchProduct(productId, next);
+  if (product) {
+    req.product = product;
+    next();
+  } else {
+    next({ status: 404, message: "Product Not Found!" });
+  }
+});
 
-router.get("/", getProductList)
+router.post("/", upload.single('image'), productCreate);
 
-router.post("/", addProductItem)
+router.get("/", productListFetch);
 
-router.get("/:productId", getProductDetails )
+router.get("/:productId", productDetailFetch);
 
-router.delete("/:productId", deleteProductItem)
+router.put("/:productId", upload.single('image'), productUpdate);
 
-router.put("/:productId", updateProductItem )
+router.delete("/:productId", productDelete);
 
-
-
-module.exports = router
+module.exports = router;

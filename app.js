@@ -4,18 +4,18 @@ const connectDb = require("./database");
 const morgan = require('morgan')
 const logger = require('./middleware/logger')
 const errorHandler =require('./middleware/errorHandler')
+const cors = require('cors')
+const path = require("path")
 
 const app = express();
+connectDb();
 app.use(express.json())
+app.use(cors())
+app.use("/media", express.static(path.join(__dirname, "media")))
 
 
 
-//https://www.npmjs.com/package/morgan
 app.use(morgan("dev"))
-// app.use(logger)
-// const logger = (req) => {
-//     return (`${req.method} ${req.protocol}://${req.get("host")}${req.originalUrl} ${new Date()}`)
-// }
 
 app.use((req, res, next)=> {
     console.log(logger(req))
@@ -32,30 +32,12 @@ app.get("/", (req, res) => {
 
 app.use("/api/products", productRoutes)
 
-// app.use((req, res) => {
-//     const err = new Error("Not Found");
-//     console.log(`Path Not Found ${logger(req)}`)
-//     res.status(404).json({
-//       error: 
-//     `Path ${err.message}`
-//     });
-// });
 
 
 app.use(errorHandler)
-// app.use((err, req, res, next) => {
-//     res.status(
-//         err.status || 500
-//     ).json(
-//         err.message || {
-//         message: "Something Broke! Internal Server Error!"
-//     })
-// })
 
-connectDb();
 
 const PORT = 8000;
-
 app.listen(PORT, () => {
     console.log("The application is running on localhost:8000")
 })
