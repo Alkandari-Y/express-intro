@@ -23,12 +23,12 @@ exports.productDetailFetch = async (req, res, next) =>
   res.status(200).json(req.product);
 
 exports.productCreate = async (req, res, next) => {
-    try {
-    if (req.file) {
-        req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
-    }
-    const newProduct = await Product.create(req.body);
-    return res.status(201).json(newProduct);
+  try {
+      if (req.file) {
+          req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+      }
+      const newProduct = await Product.create(req.body);
+      return res.status(201).json(newProduct);
   } catch (error) {
     next(error);
   }

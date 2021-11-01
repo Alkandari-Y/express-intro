@@ -1,7 +1,7 @@
-const mongoose = require("mongoose")
+const { Schema, model } = require("mongoose")
 const mongooseSlugPlugin = require('mongoose-slug-plugin');
 
-const ProductSchema = mongoose.Schema({
+const ProductSchema = Schema({
     name: {
         type: String,
         required: true
@@ -30,6 +30,10 @@ const ProductSchema = mongoose.Schema({
         type: Number,
         default: 5,
         min: 0
+    },
+    category: {
+        type: Schema.Types.ObjectId,
+        ref: 'Shop'
     }
 },
 {
@@ -38,4 +42,4 @@ const ProductSchema = mongoose.Schema({
 )
 
 ProductSchema.plugin(mongooseSlugPlugin, { tmpl: '<%=name%>' });
-module.exports = mongoose.model("Product", ProductSchema)
+module.exports = model("Product", ProductSchema)
