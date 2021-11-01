@@ -1,4 +1,5 @@
 const Product = require("../../db/models/Product");
+const removeImage = require('../../middleware/removeImage')
 
 exports.fetchProduct = async (productId, next) => {
   try {
@@ -36,7 +37,8 @@ exports.productCreate = async (req, res, next) => {
 exports.productUpdate = async (req, res, next) => {
     try {
         if (req.file) {
-            req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+          req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+          await removeImage(req.product.image, next)
         }
     const product = await Product.findByIdAndUpdate(
       req.product,

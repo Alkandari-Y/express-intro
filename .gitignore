@@ -1,5 +1,7 @@
+61Ui9Et3DDL._AC_UY445_.jpg
+61GIkRuUjqL._AC_SX466_.jpg
 dbA.js
-./media
+./media*
 # Logs
 logs
 *.log
@@ -104,3 +106,5 @@ dist
 
 # TernJS port file
 .tern-port
+media/163577004291216357025726711571683417-rubber-chicken-purse-1571683378.jpg
+media/163577410499061GIkRuUjqL._AC_SX466_.jpg
