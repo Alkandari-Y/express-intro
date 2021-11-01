@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const removeImage = (previousImage) => {
+const removeImage = (targetImage) => {
     const dir = __dirname.replace('middleware', 'media')
-    const imageUrl = previousImage.split('/')
+    const imageUrl = targetImage.split('/')
     const imageName = imageUrl[imageUrl.length - 1]
     const location = path.join(dir, imageName)
     try {

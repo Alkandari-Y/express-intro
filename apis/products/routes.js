@@ -2,7 +2,7 @@ const express = require("express");
 const Product = require("../../db/models/Product");
 const {
   productListFetch,
-  // productCreate,
+  productCreate,
   productDelete,
   productUpdate,
   productDetailFetch,
@@ -23,7 +23,7 @@ router.param("productId", async (req, res, next, productId) => {
   }
 });
 
-// router.post("/", upload.single('image'), productCreate);
+router.post("/", upload.single('image'), productCreate);
 
 router.get("/", productListFetch);
 

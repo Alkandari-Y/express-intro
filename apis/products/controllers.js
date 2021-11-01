@@ -54,6 +54,7 @@ exports.productUpdate = async (req, res, next) => {
 exports.productDelete = async (req, res, next) => {
   try {
     await req.product.remove();
+    await removeImage(req.product.image, next)
     res.status(204).end();
   } catch (error) {
     next(error);
