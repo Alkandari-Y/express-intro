@@ -31,7 +31,7 @@ const ProductSchema = Schema({
         default: 5,
         min: 0
     },
-    category: {
+    shop: {
         type: Schema.Types.ObjectId,
         ref: 'Shop'
     }

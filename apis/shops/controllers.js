@@ -13,6 +13,9 @@ exports.fetchShop = async (shopId, next) => {
 
 exports.shopCreate = async (req, res, next) => {
     try {
+        if (req.file){
+            req.body.image = `http://${req.get("host")}/media/${req.file.filename}`
+        }
         const newShop = await Shop.create(req.body)
         return res.status(201).json(newShop)
     } catch (error) {
@@ -32,13 +35,27 @@ exports.shopListFetch = async (req, res, next) => {
 
 exports.createProduct = async (req, res, next) => {
     try {
+        console.log(`Product name: ${req.body.name}`)
+        if (req.file){
+            req.body.image = `http://${req.get("host")}/media/${req.file.filename}`
+        }
         const newProduct = await Product.create(req.body)
+        console.log(`Product Created`)
         await Shop.findByIdAndUpdate(
             { _id: req.shop._id },
             { $push: {products: newProduct._id} }
         )
         return res.status(201).json(newProduct)
     } catch (error) {
-        next(err)
+        next(error)
+    }
+}
+
+exports.getGetById = async (req, res, next) => {
+    try {
+        const targetShop = await req.shop.populate('products')
+        return res.status(200).json(req.shop)
+    } catch (error){
+        next(error)
     }
 }

@@ -9,7 +9,8 @@ const {
     shopCreate,
     shopListFetch,
     createProduct,
-    fetchShop
+    fetchShop,
+    getGetById
 } = require("./controllers")
 
 router.param('shopId', async (req, res, next, shopId) => {
@@ -22,10 +23,14 @@ router.param('shopId', async (req, res, next, shopId) => {
     }
 })
 
-router.post("/:shopId/products", createProduct);
+router.post("/:shopId/products", upload.single('image'), createProduct);
 
-router.post("/", shopCreate);
+router.get("/:shopId", getGetById)
+
+router.post("/", upload.single('image'), shopCreate);
 
 router.get("/", shopListFetch);
+
+
 
 module.exports = router;
