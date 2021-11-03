@@ -12,7 +12,7 @@ const errorHandler =require('./middleware/errorHandler')
 //Routes
 const productRoutes = require("./apis/products/routes");
 const shopRoutes = require("./apis/shops/routes");
-
+const userRoutes = require("./apis/users/routes")
 //Database connection
 connectDb();
 //Express calls
@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 //Alternate Routes
 app.use("/api/products", productRoutes)
 app.use("/api/shops", shopRoutes)
-
+app.use("/api", userRoutes)
 //Error Handling Middleware
 app.use(errorHandler)
 
