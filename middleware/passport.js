@@ -16,11 +16,11 @@ exports.localStrategy = new LocalStrategy(
 
 
             // Option 2
-            const passwordMath = user ? await bcrypt.compare(password, user.password) : false;
+            // const passwordMath = user ? await bcrypt.compare(password, user.password) : false;
 
-            if (passwordMath) return done(null, user)
+            // if (passwordMath) return done(null, user)
             
-            return done(null, false)
+            // return done(null, false)
             
 
             // Option 3
