@@ -3,11 +3,12 @@ const express = require("express");
 const connectDb = require("./database");
 const cors = require('cors')
 const path = require("path")
-
+const passport = require("passport")
 //Middleware
 const morgan = require('morgan')
 // const logger = require('./middleware/logger')
 const errorHandler =require('./middleware/errorHandler')
+const {localStrategy} = require('./middleware/passport')
 
 //Routes
 const productRoutes = require("./apis/products/routes");
@@ -28,6 +29,9 @@ app.use(morgan("dev"))
 //     next()
 // })
 
+//Passport Call before routes
+app.use(passport.initialize())
+passport.use(localStrategy)
 //Home Route
 app.get("/", (req, res) => {
     res.json({task: "done"})

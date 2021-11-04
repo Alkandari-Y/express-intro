@@ -29,3 +29,7 @@ exports.signUp = async(req, res, next) => {
         next(error)
     }
 }
+
+exports.signIn = async (req, res, next) => {
+    
+}
