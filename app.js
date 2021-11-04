@@ -32,6 +32,7 @@ app.use(morgan("dev"))
 //Passport Call before routes
 app.use(passport.initialize())
 passport.use(localStrategy)
+
 //Home Route
 app.get("/", (req, res) => {
     res.json({task: "done"})

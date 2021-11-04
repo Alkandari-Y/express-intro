@@ -31,5 +31,6 @@ exports.signUp = async(req, res, next) => {
 }
 
 exports.signIn = async (req, res, next) => {
-    
+    const token = generateToken(req.user)
+    res.status(200).json({token})
 }
