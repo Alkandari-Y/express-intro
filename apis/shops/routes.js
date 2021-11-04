@@ -1,9 +1,11 @@
 const express = require("express");
+const passport = require("passport");
 const router = express.Router();
 
 const Shop = require("../../db/models/Shop")
 
 const upload = require('../../middleware/multer')
+
 
 const {
     shopCreate,
@@ -23,11 +25,11 @@ router.param('shopId', async (req, res, next, shopId) => {
     }
 })
 
-router.post("/:shopId/products", upload.single('image'), createProduct);
+router.post("/:shopId/products", passport.authenticate('jwt', {session: false}), upload.single('image'), createProduct);
 
 router.get("/:shopId", getGetById)
 
-router.post("/", upload.single('image'), shopCreate);
+router.post("/", passport.authenticate('jwt', {session: false}),upload.single('image'), shopCreate);
 
 router.get("/", shopListFetch);
 

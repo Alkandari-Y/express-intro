@@ -7,6 +7,7 @@ const { JWT_SECRET, JWT_EXPIRATION_MS } = require("../../config/keys")
 const generateToken = (userObj) => {
     const payload = {
         _id: userObj._id,
+        username: userObj.username,
         exp: Date.now() + JWT_EXPIRATION_MS
     };
     const token = jwt.sign(payload, JWT_SECRET);

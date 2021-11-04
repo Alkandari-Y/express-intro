@@ -13,10 +13,15 @@ exports.fetchShop = async (shopId, next) => {
 
 exports.shopCreate = async (req, res, next) => {
     try {
+        req.body.owner = req.user._id
         if (req.file){
             req.body.image = `http://${req.get("host")}/media/${req.file.filename}`
         }
         const newShop = await Shop.create(req.body)
+        await newShop.populate({
+            path: 'owner',
+            select: 'username'
+        })
         return res.status(201).json(newShop)
     } catch (error) {
         next(error)
@@ -35,7 +40,13 @@ exports.shopListFetch = async (req, res, next) => {
 
 exports.createProduct = async (req, res, next) => {
     try {
-        console.log(`Product name: ${req.body.name}`)
+
+        if (!req.user._id.equals(req.shop.owner._id)) {
+            return next({
+                status: 401,
+                message: "Not Authorized!"
+            })
+        }
         if (req.file){
             req.body.image = `http://${req.get("host")}/media/${req.file.filename}`
         }

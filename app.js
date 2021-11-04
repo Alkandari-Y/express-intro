@@ -8,7 +8,7 @@ const passport = require("passport")
 const morgan = require('morgan')
 // const logger = require('./middleware/logger')
 const errorHandler =require('./middleware/errorHandler')
-const {localStrategy} = require('./middleware/passport')
+const {localStrategy, JWTStrategy} = require('./middleware/passport')
 
 //Routes
 const productRoutes = require("./apis/products/routes");
@@ -32,7 +32,7 @@ app.use(morgan("dev"))
 //Passport Call before routes
 app.use(passport.initialize())
 passport.use(localStrategy)
-
+passport.use(JWTStrategy)
 //Home Route
 app.get("/", (req, res) => {
     res.json({task: "done"})

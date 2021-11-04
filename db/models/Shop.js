@@ -10,10 +10,16 @@ const ShopSchema = Schema({
             type: String,
             required: true
         },
-    products: [{
+    products: [
+            {
+            type: Schema.Types.ObjectId,
+            ref: 'Product'
+            }
+        ],
+    owner: {
         type: Schema.Types.ObjectId,
-        ref: 'Product'
-    }]
+        ref: "User"
+    }
     },
         {
             timestamps: true,
